@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:ludo_flutter/constants.dart';
 import 'package:ludo_flutter/widgets/pawn_widget.dart';
 
-import 'audio.dart';
-
 ///This is ludo player model class which contains all the information about the player
 class LudoPlayer {
   ///Player type
@@ -59,7 +57,6 @@ class LudoPlayer {
 
   ///Moving mean you'll replace the current widget with the new widget
   void movePawn(int index, int step) async {
-    Audio.playMove();
     pawns[index] = PawnWidget(index, type, step: step, highlight: false);
   }
 

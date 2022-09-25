@@ -54,8 +54,7 @@ class PawnWidget extends StatelessWidget {
                 context.read<LudoProvider>().move(type, index, step);
               },
               child: Container(
-                padding: const EdgeInsets.all(2),
-                decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+                decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: color, width: 2)),
                 child: Container(
                   decoration: BoxDecoration(
                     color: color,

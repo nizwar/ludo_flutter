@@ -142,14 +142,14 @@ class LudoProvider extends ChangeNotifier {
 
     currentPlayer.highlightAllPawns(false);
 
-    int delay = 500;
+    // int delay = 500;
     var selectedPlayer = player(type);
     for (int i = selectedPlayer.pawns[index].step; i < step; i++) {
       if (_stopMoving) break;
       if (selectedPlayer.pawns[index].step == i) continue;
       selectedPlayer.movePawn(index, i);
+      await Audio.playMove();
       notifyListeners();
-      await Future.delayed(Duration(milliseconds: delay));
       if (_stopMoving) break;
     }
     if (checkToKill(type, index, step, selectedPlayer.path)) {
