@@ -45,5 +45,20 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSSpeechRecognitionUsageDescription</key>
+    <string>Recognize speech</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Transmitting audio between users</string>
+    <key>FirebaseAppDelegateProxyEnabled</key>
+    <false/>
+	<key>NSMotionUsageDescription</key>
+    <string>Ludo does not need this permission</string>
+    <key>NSAppleMusicUsageDescription</key>
+    <string>App needs access in order to record or play audio</string>
+    <key>UIBackgroundModes</key>
+    <array>
+        <string>audio</string>
+        <string>processing</string>
+    </array>
 </dict>
 </plist>
