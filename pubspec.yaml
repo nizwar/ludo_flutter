@@ -4,21 +4,22 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.17.6 <3.0.0"
+  sdk: ">=2.18.0 <3.0.0"
+
 dependencies:
-  agora_rtc_engine: ^6.0.0-rc.2
-  cloud_firestore: ^3.4.9
-  firebase_core: ^1.23.0
-  firebase_crashlytics: ^2.8.11
-  firebase_performance: ^0.8.3+1
+  agora_rtc_engine: ^6.0.0
+  cloud_firestore: ^3.5.1
+  firebase_core: ^1.24.0
+  firebase_crashlytics: ^2.9.0
+  firebase_performance: ^0.8.3+3
   flutter:
     sdk: flutter
   just_audio: ^0.9.29
-  provider: ^6.0.3
+  provider: ^6.0.4
   simple_ripple_animation: ^0.0.3
 
 dev_dependencies:
-  flutter_lints: ^2.0.0
+  flutter_lints: ^2.0.1
   flutter_test:
     sdk: flutter
 

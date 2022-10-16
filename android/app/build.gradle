@@ -47,10 +47,11 @@ android {
 
     defaultConfig {
         applicationId "dev.nizwar.ludo_flutter" 
-        minSdkVersion flutter.minSdkVersion
+        minSdkVersion 19//flutter.minSdkVersion
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        multiDexEnabled true
     }
 
     buildTypes {

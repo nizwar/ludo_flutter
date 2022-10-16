@@ -1,14 +1,13 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:ludo_flutter/firebase_options.dart';
 import 'package:ludo_flutter/main_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'ludo_provider.dart';
 
-main() {
+main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp(name: "Ludo Game", options: DefaultFirebaseOptions.currentPlatform);
+  // await Firebase.initializeApp(
+  //     name: "Ludo Game", options: DefaultFirebaseOptions.currentPlatform);
   return runApp(ChangeNotifierProvider(
     create: (_) => LudoProvider(),
     child: const Root(),
@@ -44,6 +43,7 @@ class _RootState extends State<Root> {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: MainScreen(),
     );
   }
