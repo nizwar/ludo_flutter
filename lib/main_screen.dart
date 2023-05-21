@@ -13,10 +13,10 @@ class MainScreen extends StatelessWidget {
       body: Stack(
         alignment: Alignment.center,
         children: [
-          Column(
+          const Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: const [
+            children: [
               BoardWidget(),
               Center(
                   child: SizedBox(
