@@ -1,0 +1,30 @@
+name: Build Flutter Web
+on: push
+
+jobs:
+  build_documentation:
+    name: Build Web
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Flutter SDK
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+
+      - name: Flutter pub upgrade
+        run: flutter pub upgrade
+
+      - name: Flutter build web
+        run: flutter build web --web-renderer canvaskit
+
+      - name: Release the documentation
+        uses: crazy-max/ghaction-github-pages@v3
+        if: success()
+        with:
+          target_branch: build
+          build_dir: build/web
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
