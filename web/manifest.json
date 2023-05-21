@@ -1,7 +1,7 @@
 {
     "name": "NLudo Flutter",
     "short_name": "NLudo",
-    "start_url": ".",
+    "start_url": "https://nizwar.github.io/ludo_flutter/",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#e74c3c",

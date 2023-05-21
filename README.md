@@ -1,7 +1,7 @@
 # NLudo Flutter
 Ludo Game made with Flutter
 
-[Play now!](http://nludo-flutter.web.app)
+[Play now!](https://nizwar.github.io/ludo_flutter/)
 
 ## TODO : 
 * Multiplayer
