@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:ludo_flutter/ludo_player.dart';
+import 'package:provider/provider.dart';
 
 import 'audio.dart';
 import 'constants.dart';
@@ -41,17 +42,53 @@ class LudoProvider extends ChangeNotifier {
   LudoPlayer get currentPlayer => players.firstWhere((element) => element.type == _currentTurn);
 
   ///Fill all players
-  final List<LudoPlayer> players = [
-    LudoPlayer(LudoPlayerType.green),
-    LudoPlayer(LudoPlayerType.yellow),
-    LudoPlayer(LudoPlayerType.blue),
-    LudoPlayer(LudoPlayerType.red),
-  ];
+  final List<LudoPlayer> players = [];
 
   ///Player win, we use `LudoPlayerType` to make it easier to check
   final List<LudoPlayerType> winners = [];
 
   LudoPlayer player(LudoPlayerType type) => players.firstWhere((element) => element.type == type);
+
+  ///This method will check if the pawn can kill another pawn or not by checking the step of the pawn
+  bool checkToKill(LudoPlayerType type, int index, int step, List<List<double>> path) {
+    bool killSomeone = false;
+    for (int i = 0; i < 4; i++) {
+      var greenElement = player(LudoPlayerType.green).pawns[i];
+      var blueElement = player(LudoPlayerType.blue).pawns[i];
+      var redElement = player(LudoPlayerType.red).pawns[i];
+      var yellowElement = player(LudoPlayerType.yellow).pawns[i];
+
+      if ((greenElement.step > -1 && !LudoPath.safeArea.map((e) => e.toString()).contains(player(LudoPlayerType.green).path[greenElement.step].toString())) && type != LudoPlayerType.green) {
+        if (player(LudoPlayerType.green).path[greenElement.step].toString() == path[step - 1].toString()) {
+          killSomeone = true;
+          player(LudoPlayerType.green).movePawn(i, -1);
+          notifyListeners();
+        }
+      }
+      if ((yellowElement.step > -1 && !LudoPath.safeArea.map((e) => e.toString()).contains(player(LudoPlayerType.yellow).path[yellowElement.step].toString())) && type != LudoPlayerType.yellow) {
+        if (player(LudoPlayerType.yellow).path[yellowElement.step].toString() == path[step - 1].toString()) {
+          killSomeone = true;
+          player(LudoPlayerType.yellow).movePawn(i, -1);
+          notifyListeners();
+        }
+      }
+      if ((blueElement.step > -1 && !LudoPath.safeArea.map((e) => e.toString()).contains(player(LudoPlayerType.blue).path[blueElement.step].toString())) && type != LudoPlayerType.blue) {
+        if (player(LudoPlayerType.blue).path[blueElement.step].toString() == path[step - 1].toString()) {
+          killSomeone = true;
+          player(LudoPlayerType.blue).movePawn(i, -1);
+          notifyListeners();
+        }
+      }
+      if ((redElement.step > -1 && !LudoPath.safeArea.map((e) => e.toString()).contains(player(LudoPlayerType.red).path[redElement.step].toString())) && type != LudoPlayerType.red) {
+        if (player(LudoPlayerType.red).path[redElement.step].toString() == path[step - 1].toString()) {
+          killSomeone = true;
+          player(LudoPlayerType.red).movePawn(i, -1);
+          notifyListeners();
+        }
+      }
+    }
+    return killSomeone;
+  }
 
   ///This is the function that will be called to throw the dice
   void throwDice() async {
@@ -194,47 +231,6 @@ class LudoProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  ///This method will check if the pawn can kill another pawn or not by checking the step of the pawn
-  bool checkToKill(LudoPlayerType type, int index, int step, List<List<double>> path) {
-    bool killSomeone = false;
-    for (int i = 0; i < 4; i++) {
-      var greenElement = player(LudoPlayerType.green).pawns[i];
-      var blueElement = player(LudoPlayerType.blue).pawns[i];
-      var redElement = player(LudoPlayerType.red).pawns[i];
-      var yellowElement = player(LudoPlayerType.yellow).pawns[i];
-
-      if ((greenElement.step > -1 && !LudoPath.safeArea.map((e) => e.toString()).contains(player(LudoPlayerType.green).path[greenElement.step].toString())) && type != LudoPlayerType.green) {
-        if (player(LudoPlayerType.green).path[greenElement.step].toString() == path[step - 1].toString()) {
-          killSomeone = true;
-          player(LudoPlayerType.green).movePawn(i, -1);
-          notifyListeners();
-        }
-      }
-      if ((yellowElement.step > -1 && !LudoPath.safeArea.map((e) => e.toString()).contains(player(LudoPlayerType.yellow).path[yellowElement.step].toString())) && type != LudoPlayerType.yellow) {
-        if (player(LudoPlayerType.yellow).path[yellowElement.step].toString() == path[step - 1].toString()) {
-          killSomeone = true;
-          player(LudoPlayerType.yellow).movePawn(i, -1);
-          notifyListeners();
-        }
-      }
-      if ((blueElement.step > -1 && !LudoPath.safeArea.map((e) => e.toString()).contains(player(LudoPlayerType.blue).path[blueElement.step].toString())) && type != LudoPlayerType.blue) {
-        if (player(LudoPlayerType.blue).path[blueElement.step].toString() == path[step - 1].toString()) {
-          killSomeone = true;
-          player(LudoPlayerType.blue).movePawn(i, -1);
-          notifyListeners();
-        }
-      }
-      if ((redElement.step > -1 && !LudoPath.safeArea.map((e) => e.toString()).contains(player(LudoPlayerType.red).path[redElement.step].toString())) && type != LudoPlayerType.red) {
-        if (player(LudoPlayerType.red).path[redElement.step].toString() == path[step - 1].toString()) {
-          killSomeone = true;
-          player(LudoPlayerType.red).movePawn(i, -1);
-          notifyListeners();
-        }
-      }
-    }
-    return killSomeone;
-  }
-
   ///This function will check if the pawn finish the game or not
   void validateWin(LudoPlayerType color) {
     if (winners.map((e) => e.name).contains(color.name)) return;
@@ -248,9 +244,22 @@ class LudoProvider extends ChangeNotifier {
     }
   }
 
+  void startGame() {
+    winners.clear();
+    players.clear();
+    players.addAll([
+      LudoPlayer(LudoPlayerType.green),
+      LudoPlayer(LudoPlayerType.yellow),
+      LudoPlayer(LudoPlayerType.blue),
+      LudoPlayer(LudoPlayerType.red),
+    ]);
+  }
+
   @override
   void dispose() {
     _stopMoving = true;
     super.dispose();
   }
+
+  static LudoProvider read(BuildContext context) => context.read();
 }

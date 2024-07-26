@@ -4,16 +4,16 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.17.6 <3.0.0"
+  sdk: ">=3.0.0 <4.0.0"
 dependencies:
   flutter:
     sdk: flutter
-  just_audio: ^0.9.29
-  provider: ^6.0.3
-  simple_ripple_animation: ^0.0.3
+  just_audio: ^0.9.39
+  provider: ^6.1.2
+  simple_ripple_animation: ^0.0.9
 
 dev_dependencies:
-  flutter_lints: ^2.0.0
+  flutter_lints: ^4.0.0
   flutter_test:
     sdk: flutter
 

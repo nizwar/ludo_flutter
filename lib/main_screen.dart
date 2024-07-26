@@ -1,11 +1,21 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'; 
 import 'package:ludo_flutter/ludo_provider.dart';
 import 'package:ludo_flutter/widgets/board_widget.dart';
 import 'package:ludo_flutter/widgets/dice_widget.dart';
 import 'package:provider/provider.dart';
 
-class MainScreen extends StatelessWidget {
+class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
+
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+  @override
+  void initState() { 
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,12 +28,7 @@ class MainScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               BoardWidget(),
-              Center(
-                  child: SizedBox(
-                width: 50,
-                height: 50,
-                child: DiceWidget(),
-              )),
+              Center(child: SizedBox(width: 50, height: 50, child: DiceWidget())),
             ],
           ),
           Consumer<LudoProvider>(
