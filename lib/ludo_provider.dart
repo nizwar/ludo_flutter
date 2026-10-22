@@ -6,8 +6,13 @@ import 'package:provider/provider.dart';
 
 import 'audio.dart';
 import 'constants.dart';
+import 'dice.dart';
 
 class LudoProvider extends ChangeNotifier {
+  LudoProvider({Dice? dice}) : _dice = dice ?? Dice();
+
+  final Dice _dice;
+
   ///Flags to check if pawn is moving
   bool _isMoving = false;
 
@@ -108,9 +113,11 @@ class LudoProvider extends ChangeNotifier {
 
     Future.delayed(const Duration(seconds: 1)).then((value) {
       _diceStarted = false;
-      var random = Random();
-      _diceResult = random.nextBool() ? 6 : random.nextInt(6) + 1; //Random between 1 - 6
+      _diceResult = _dice.roll();
       notifyListeners();
+
+      ///The third six in a row passes the turn without moving
+      if (_dice.forfeitsTurn) return nextTurn();
 
       if (diceResult == 6) {
         currentPlayer.highlightAllPawns();
@@ -211,6 +218,7 @@ class LudoProvider extends ChangeNotifier {
 
   ///Next turn will be called when the player finish the turn
   void nextTurn() {
+    _dice.reset();
     switch (_currentTurn) {
       case LudoPlayerType.green:
         _currentTurn = LudoPlayerType.yellow;
@@ -245,6 +253,7 @@ class LudoProvider extends ChangeNotifier {
   }
 
   void startGame() {
+    _dice.reset();
     winners.clear();
     players.clear();
     players.addAll([
